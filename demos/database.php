@@ -36,6 +36,26 @@ trait ModelLockTrait
     }
 }
 
+
+
+class Comp extends \atk4\ui\FormField\Input
+{
+    public function init(): void
+    {
+        parent::init();
+
+        $this->inputType = 'hidden';
+
+        $view = \atk4\ui\View::addTo($this);
+        \atk4\ui\Header::addTo($view, ['test']);
+        $form = \atk4\ui\Form::addTo($view);
+        $view->region = 'AfterAfterInput';
+
+        $form->addField('field_in_inner_form');
+    }
+}
+
+
 class Country extends \atk4\data\Model
 {
     public $table = 'country';
@@ -49,7 +69,7 @@ class Country extends \atk4\data\Model
         $this->addField('iso', ['caption' => 'ISO', 'required' => true, 'type' => 'string', 'ui' => ['table' => ['sortable' => false]]]);
         $this->addField('iso3', ['caption' => 'ISO3', 'required' => true, 'type' => 'string']);
         $this->addField('numcode', ['caption' => 'ISO Numeric Code', 'type' => 'number', 'required' => true]);
-        $this->addField('phonecode', ['caption' => 'Phone Prefix', 'type' => 'number', 'required' => true]);
+        $this->addField('phonecode', ['caption' => 'Phone Prefix', 'type' => 'number', 'required' => true, 'ui' => ['form' => '\\' . Comp::class]]);
 
         $this->onHook(\atk4\data\Model::HOOK_BEFORE_SAVE, function (\atk4\data\Model $m) {
             if (!$m->get('sys_name')) {
