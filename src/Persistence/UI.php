@@ -189,7 +189,7 @@ class UI extends \atk4\data\Persistence
      *  - any validation for the "saving" or output is ignored.
      *  - handling of all sorts of expressions is disabled
      */
-    public function typecastSaveRow(Model $m, $row)
+    public function typecastSaveRow(Model $m, $row): array
     {
         if (!$row) {
             return $row;
